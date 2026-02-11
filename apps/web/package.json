@@ -1,0 +1,40 @@
+{
+  "name": "@todo/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "lint": "eslint .",
+    "typecheck": "nuxt typecheck",
+    "test:unit": "vitest run --passWithNoTests",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@nuxt/a11y": "^1.0.0-alpha.1",
+    "@nuxt/hints": "^1.0.0-alpha.6",
+    "@nuxt/image": "^2.0.0",
+    "@nuxt/scripts": "^0.13.2",
+    "@nuxt/ui": "^4.4.0",
+    "@pinia/nuxt": "^0.5.4",
+    "@todo/domain": "*",
+    "@todo/storage": "*",
+    "@vee-validate/nuxt": "^4.15.1",
+    "@vee-validate/yup": "^4.15.1",
+    "es-toolkit": "^1.44.0",
+    "nuxt": "^4.3.1",
+    "pinia": "^2.2.6",
+    "vue": "^3.5.28",
+    "vue-router": "^4.6.4",
+    "yup": "^1.7.1"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.15.1",
+    "@nuxt/test-utils": "^4.0.0",
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.0.0",
+    "@vue/test-utils": "^2.4.6",
+    "sass": "^1.81.0",
+    "vitest": "^4.0.18"
+  }
+}

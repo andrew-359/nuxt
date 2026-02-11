@@ -1,0 +1,42 @@
+// Переопределение карточек: фон и бордер из конфига → CSS-переменные и классы.
+
+@use 'sass:map';
+@use 'config' as app;
+
+$card: map.get(app.$app-config, 'card');
+$card-bg: map.get($card, 'bg');
+$card-border: map.get($card, 'border');
+$card-border-color: map.get($card-border, 'color');
+$card-hover: map.get($card, 'hover');
+$card-hover-shadow: map.get($card-hover, 'shadow');
+
+:root {
+  --app-card-bg: #{map.get($card-bg, 'light')};
+  --app-card-border-width: #{map.get($card-border, 'width')};
+  --app-card-border-color: #{map.get($card-border-color, 'light')};
+  --app-card-hover-transition: #{map.get($card-hover, 'transition')};
+  --app-card-hover-shadow: #{map.get($card-hover-shadow, 'light')};
+}
+
+.dark {
+  --app-card-bg: #{map.get($card-bg, 'dark')};
+  --app-card-border-color: #{map.get($card-border-color, 'dark')};
+  --app-card-hover-shadow: #{map.get($card-hover-shadow, 'dark')};
+}
+
+.app-card-bg {
+  background-color: var(--app-card-bg);
+}
+
+.app-card-border {
+  border-width: var(--app-card-border-width);
+  border-style: solid;
+  border-color: var(--app-card-border-color);
+}
+
+.app-card-hover {
+  transition: var(--app-card-hover-transition);
+  &:hover {
+    box-shadow: var(--app-card-hover-shadow);
+  }
+}

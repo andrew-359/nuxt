@@ -1,0 +1,7 @@
+// Сетка списка заметок на главной: 1 колонка (телефон), 2 с sm (планшет), 3 с lg (компьютер).
+
+@use "config" as app;
+
+.notes-list-grid {
+  @include app.notes-grid;
+}

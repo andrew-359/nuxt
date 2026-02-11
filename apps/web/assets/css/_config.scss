@@ -1,0 +1,87 @@
+// Декларативный конфиг приложения. Меняй только значения здесь.
+
+@use "sass:map";
+
+$app-config: (
+  // Масштаб шрифта (на будущее: html { font-size: calc(100% * var(--app-font-scale)); })
+  "font-scale": 1.2,
+
+  // Брейкпойнты для адаптивности (совпадают с Tailwind / Nuxt UI для единообразия)
+  "breakpoints": (
+    "sm": 640px,
+    "md": 768px,
+    "lg": 1024px,
+    "xl": 1280px,
+    "2xl": 1536px,
+  ),
+
+  // Сетка списка заметок: колонки по брейкпойнтам (mobile → tablet → desktop)
+  "notes-grid": (
+    "default": 1,
+    "sm": 2,
+    "lg": 3,
+  ),
+
+  // Карточки: фон, бордер (только карточки, на хедер/футер не влияет)
+  "card": (
+      "bg": (
+        "light": #eee,
+        "dark": #0d145875,
+      ),
+      "border": (
+        "width": 2px,
+        "color": (
+          "light": #e2e8f0,
+          "dark": #334155,
+        ),
+      ),
+      "hover": (
+        "transition": box-shadow 0.2s ease,
+        "shadow": (
+          "light": 0 2px 8px rgba(170, 166, 166, 0.288),
+          "dark": 0 2px 12px rgba(82, 119, 74, 0.418),
+        ),
+      ),
+    )
+);
+
+// Хелпер: значение из конфига по пути ключей (например config-get('card', 'bg', 'light'))
+@function config-get($keys...) {
+  @return map.get($app-config, $keys...);
+}
+
+// Миксин: медиа min-width по имени брейкпойнта. Пример: @include bp(md) { ... }
+@mixin bp($name) {
+  $width: map.get($app-config, "breakpoints", $name);
+  @if $width {
+    @media (min-width: $width) {
+      @content;
+    }
+  }
+}
+
+// Миксин: медиа max-width (до брейкпойнта не включая). Пример: @include bp-max(md) { ... }
+@mixin bp-max($name) {
+  $width: map.get($app-config, "breakpoints", $name);
+  @if $width {
+    $max-width: $width - 1px;
+    @media (max-width: $max-width) {
+      @content;
+    }
+  }
+}
+
+// Сетка списка заметок: один столбец по умолчанию, 2 с sm, 3 с lg (только наши брейкпойнты).
+@mixin notes-grid {
+  $grid: map.get($app-config, "notes-grid");
+  grid-template-columns: repeat(#{map.get($grid, "default")}, minmax(0, 1fr));
+  @include bp("sm") {
+    grid-template-columns: repeat(#{map.get($grid, "sm")}, minmax(0, 1fr));
+  }
+  @include bp("lg") {
+    grid-template-columns: repeat(#{map.get($grid, "lg")}, minmax(0, 1fr));
+  }
+}
+
+// Брейкпойнты в $app-config.breakpoints; миксины bp($name), bp-max($name), notes-grid.
+// В другом файле: @use "config" as app; затем @include app.bp(md) { ... }

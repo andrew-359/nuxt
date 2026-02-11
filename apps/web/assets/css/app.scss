@@ -1,0 +1,14 @@
+// Точка входа своих стилей. Конфиг — _config.scss, карточки — _cards.scss, список заметок — _notes-list.scss.
+
+@use "sass:map";
+@use "config" as app;
+@use "cards";
+@use "notes-list";
+
+:root {
+  --app-font-scale: #{map.get(app.$app-config, "font-scale")};
+}
+
+html {
+  font-size: calc(100% * var(--app-font-scale));
+}
